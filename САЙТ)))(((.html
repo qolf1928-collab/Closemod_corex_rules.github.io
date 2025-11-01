@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Правила Closemod</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f8f9fa;
+            --border-color: #e1e1e1;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+        }
+
+        .dark-theme {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --card-bg: #2d2d2d;
+            --border-color: #444444;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+        }
+
+        .theme-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            background: var(--secondary-color);
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+        }
+
+        .sidebar {
+            flex: 0 0 250px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .sidebar h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 10px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 10px 15px;
+            background: transparent;
+            border-radius: 5px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+
+        .section {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            margin: 25px 0 15px;
+            font-size: 1.3rem;
+        }
+
+        .rule-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .rule-item:last-child {
+            border-bottom: none;
+        }
+
+        .rule-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .rule-description {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .rule-punishment {
+            background: rgba(231, 76, 60, 0.1);
+            padding: 12px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .note {
+            background: rgba(46, 204, 113, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .code-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .code-item {
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .code-item:last-child {
+            border-bottom: none;
+        }
+
+        .term-item {
+            margin-bottom: 20px;
+        }
+
+        .term-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: static;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Правила Closemod</h1>
+            <button class="theme-toggle" id="themeToggle">
+                <span>Тёмная тема</span>
+            </button>
+        </header>
+        
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <h2>Разделы правил</h2>
+                <ul class="nav-list">
+                    <li class="nav-item"><a class="nav-link active" data-section="section1">1. Поведение с Closemod</a></li>
+                    <li class="nav-item"><a class="nav-link" data-section="section2">2. Игровой процесс</a></li>
+                </ul>
+            </aside>
+            
+            <main class="main-content">
+                <section id="section1" class="section active">
+                    <h2>1. Поведение в отношении Closemod</h2>
+                    <p>Нарушения, связанные с взаимодействием с администрацией проекта.</p>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">1.1. Выдача себя за представителя Closemod</div>
+                        <div class="rule-description">Любые попытки выдать себя за модератора, Closemod или иного представителя команды проекта с целью введения игроков в заблуждение, получения преимуществ или оказания влияния.</div>
+                        <div class="rule-punishment">
+                            <strong>Наказание:</strong><br>
+                            Первое нарушение: предупреждение<br>
+                            Второе: closeban на 14 дней<br>
+                            Третье: closeban на 90 дней
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">1.2. Неуважительное отношение к Администрации</div>
+                        <div class="rule-description">Травля, оскорбления, публичные насмешки, клевета или целенаправленное причинение морального дискомфорта Closemod проекта.</div>
+                        <div class="rule-punishment">
+                            <strong>Наказание:</strong><br>
+                            Первое нарушение: предупреждение<br>
+                            Второе: closeban на 2 часа<br>
+                            Третье: closeban на 14 дней
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">1.3. Предоставление администрации заведомо ложной информации</div>
+                        <div class="rule-description">Сообщение Closemod недостоверных или сфабрикованных сведений с целью введения их в заблуждение, сокрытия нарушений или жалобы на невиновного игрока или ситуацию.</div>
+                        <div class="rule-punishment">
+                            <strong>Наказание:</strong><br>
+                            Первое нарушение: closeban на 3 дня<br>
+                            Повторное нарушение: closeban на 14 дней
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="section2" class="section">
+                    <h2>2. Игровой процесс</h2>
+                    <p>Нарушения, подрывающие принципы честной игры и стабильность игрового процесса.</p>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">2.1. Неявка после записи (додж)</div>
+                        <div class="rule-description">Ситуация, при которой игрок не присоединяется к игре после назначенного времени в целом, занимая место в Close.</div>
+                        <div class="rule-punishment">
+                            <strong>Наказание:</strong><br>
+                            Первое нарушение: closeban на 30 мин<br>
+                            Повторное: closeban на 2 часа<br>
+                            Постоянное: closeban на 5 часа
+                        </div>
+                        <div class="note">
+                            <strong>Исключение:</strong> проблемы с подключением к игре, отключение света интернета и т. д.
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">2.2. Преждевременный выход из матча (Лив)</div>
+                        <div class="rule-description">Выход игрока из активного матча до его официального завершения, что приводит к нарушению баланса команд и ухудшению игрового опыта для других участников.</div>
+                        <div class="rule-punishment">
+                            <strong>Наказание:</strong><br>
+                            Первое нарушение: closeban на 1 часа<br>
+                            Повторное: closeban на 4 часа<br>
+                            Постоянное: closeban на 12 часа
+                        </div>
+                        <div class="note">
+                            <strong>Исключение:</strong> проблемы отключение света, интернета и т. д.
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">2.3. Использование чужого аккаунта (ПО)</div>
+                        <div class="rule-description">Игра на аккаунте, не принадлежащем участнику, а также передача своего аккаунта другому лицу для игры .</div>
+                        <div class="rule-punishment">
+                            <strong>Наказание:</strong><br>
+                            Первое нарушение: closeban на 3 дня<br>
+                            Повторное: closeban на 30 дня<br>
+                            Постоянное: closeban на 90 дня
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">2.4. Использование ошибок игрового клиента (Багов)</div>
+                        <div class="rule-description">Умышленное использование любых известных ошибок игры (багов) для получения несправедливого преимущества над противником. Обнаруженные баги должны быть сообщены администрации.</div>
+                        <div class="rule-punishment">
+                            <strong>Наказание:</strong><br>
+                            Первое нарушение: closeban на 3 дня<br>
+                            Повторное: closeban на 7 дня<br>
+                            Постоянное: closeban на 14 дня
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">2.5. Запрещено использование сторонних программ</div>
+                        <div class="rule-description">макросов/ахк/скриптов/читов/скинченджеров. Запрещено отказываться от проверки на читы.</div>
+                        <div class="rule-punishment">
+                            <strong>Наказание:</strong><br>
+                            При обнаружении читов:<br>
+                            Первое нарушение: пермач
+                        </div>
+                    </div>
+                    
+                    <div class="rule-item">
+                        <div class="rule-title">2.6. Создание помех игровому процессу</div>
+                        <div class="rule-description">Совершение действий, которые целенаправленно мешают ведению матча или поиску игры. К ним относятся, но не ограничиваются: намеренный саботаж, team-kill, блокировка проходов, а также создание помех в голосовом чате (громкие посторонние шумы, намеренная ретрансляция звуков, звуковой спам).</div>
+                        <div class="rule-punishment">
+                            <strong>Наказание:</strong><br>
+                            Первое нарушение: пред<br>
+                            Повторное: closeban на 3 дня<br>
+                            Постоянное: closeban на 7 дня
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+        
+        <footer>
+            <p>Правила проекта Closemod | Обновлено: 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Функция для переключения темы
+            const themeToggle = document.getElementById('themeToggle');
+            const themeText = themeToggle.querySelector('span');
+            
+            themeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-theme');
+                
+                if (document.body.classList.contains('dark-theme')) {
+                    themeText.textContent = 'Светлая тема';
+                } else {
+                    themeText.textContent = 'Тёмная тема';
+                }
+            });
+            
+            // Функция для навигации по разделам
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    // Убираем активный класс у всех ссылок
+                    navLinks.forEach(item => item.classList.remove('active'));
+                    
+                    // Добавляем активный класс к текущей ссылке
+                    this.classList.add('active');
+                    
+                    // Получаем ID секции для отображения
+                    const sectionId = this.getAttribute('data-section');
+                    
+                    // Скрываем все секции
+                    sections.forEach(section => section.classList.remove('active'));
+                    
+                    // Показываем нужную секцию
+                    document.getElementById(sectionId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
